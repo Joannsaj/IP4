@@ -6,5 +6,5 @@ from django.urls import path
 
 urlpatterns=[
     path('', views.welcome, name='welcome'),
-    path('api/user/', views.UserList.as_view()),
+    path('api/user/', views.UserListView.as_view()),
 ]

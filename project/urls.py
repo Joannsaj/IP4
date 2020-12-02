@@ -21,9 +21,6 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('app.urls')),
-    path('accounts/register/',RegistrationView.as_view(success_url='/profile/'),name='django_registration_register'),
-    path('accounts/', include('django_registration.backends.one_step.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
     path('auth/login/', obtain_jwt_token), 
     path('auth/', include('rest_auth.urls')),
     path('auth/signup/', include('rest_auth.registration.urls')),

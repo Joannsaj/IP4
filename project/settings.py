@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'app',
     'rest_framework',
+    'rest_framework.authtoken',
     'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -139,7 +140,7 @@ cloudinary.config(
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'app.User'
+AUTH_USER_MODEL = 'app.CustomUser'
 
 # REST Framework settings
 

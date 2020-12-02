@@ -139,6 +139,8 @@ cloudinary.config(
 
 STATIC_URL = '/static/'
 
+AUTH_USER_MODEL = 'app.User'
+
 # REST Framework settings
 
 REST_FRAMEWORK = {

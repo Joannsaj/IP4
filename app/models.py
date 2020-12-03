@@ -2,42 +2,24 @@ from django.db import models
 import datetime as dt
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import AbstractUser
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
 
 # Create your models here.
 class CustomUser(AbstractUser):
     name = models.CharField(blank=True, max_length=255)
-
+    
     def __str__(self):
         return self.email
-
-# class Profile(models.Model):
-#     profile = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-#     name = models.CharField(max_length=60)
-#     location = models.CharField(max_length=60)
-#     # neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE, related_name='neighbourhood')
-#     profile_pic = CloudinaryField('image', null=True)
-#     bio = models.TextField(null=True)
-
-#     @receiver(post_save, sender=User)
-#     def create_user_profile(sender, instance, created, **kwargs):
-#         if created:
-#             Profile.objects.create(user=instance)
-
-#     @receiver(post_save, sender=User)
-#     def save_user_profile(sender, instance, **kwargs):
-#         instance.profile.save()    
+ 
 
 class Neighbourhood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
-    admin = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='hood')
-    neighbourhood_logo = models.ImageField(upload_to='images/')
+    admin = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name='hood')
+    # neighbourhood_logo = CloudinaryField('image', null=True)
     description = models.TextField()
     healthcenter_number = models.IntegerField(null=True, blank=True)
     police_number = models.IntegerField(null=True, blank=True)
-    occupants_count = models.IntegerField(null=True, blank=True)
+    # occupants_count = models.IntegerField(null=True, blank=True)
 
 
     def __str__(self):
@@ -58,7 +40,7 @@ class Business(models.Model):
     email = models.EmailField(max_length=254)
     description = models.TextField(blank=True)
     neighbourhood = models.ForeignKey('Neighbourhood', on_delete=models.CASCADE, related_name='business')
-    user = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='owner')
+    user = models.ForeignKey('CustomUser', on_delete=models.CASCADE, related_name='owner')
 
     def __str__(self):
         return f'{self.name} Business'
@@ -73,7 +55,7 @@ class Post(models.Model):
     title = models.CharField(max_length=120, null=True)
     post = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='post_owner')
+    user = models.ForeignKey('CustomUser', on_delete=models.CASCADE, related_name='post_owner')
     hood = models.ForeignKey('Neighbourhood', on_delete=models.CASCADE, related_name='hood_post')
 
 

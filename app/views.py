@@ -1,12 +1,19 @@
 from django.shortcuts import redirect,render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate
-from .forms import SignUpForm, BusinessForm, NeighbourHoodForm, PostForm
+from .forms import  BusinessForm, NeighbourHoodForm, PostForm
 from django.contrib.auth.decorators import login_required
-from .models import Neighbourhood, Business, Post 
-from rest_framework import generics
+from .models import Neighbourhood, Business, Post , CustomUser
+from rest_framework import generics, viewsets
 from . import models
 from . import serializers
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from .serializers import UserSerializer, NeighbourhoodSerializer
+from .permissions import IsAdminOrReadOnly
+from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS
+
 
 # Create your views here.
 def welcome(request):
@@ -15,6 +22,11 @@ def welcome(request):
 class UserListView(generics.ListAPIView):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserSerializer    
+
+class NeighbourhoodSerializer(viewsets.ModelViewSet):
+    queryset = Neighbourhood.objects.all()
+    serializer_class = serializers.NeighbourhoodSerializer    
+    permission_classes = (IsAdminOrReadOnly,)
 
 @login_required(login_url='login')
 def index(request):

@@ -1,10 +1,13 @@
 from . import views
+from .views import NeighbourhoodSerializer
 from django.urls import path
-# from django.conf import settings
-# from django.conf.urls.static import static
-# from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r"create_hood", NeighbourhoodSerializer)
 
 urlpatterns=[
     path('', views.welcome, name='welcome'),
     path('api/user/', views.UserListView.as_view()),
-]
+    # path('api/user/user-id/<int:pk>',views.UserDescription.as_view())
+] + router.urls

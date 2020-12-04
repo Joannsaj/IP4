@@ -14,7 +14,7 @@ from .permissions import IsAdminOrReadOnly
 def welcome(request):
     return render(request, 'welcome.html')
 
-class UserListView(generics.ListAPIView):
+class UserSerializer(viewsets.ModelViewSet):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserSerializer    
 

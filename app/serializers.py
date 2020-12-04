@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from . import models
 from .models import Profile
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
-        fields = ('email', 'username' )
+        fields = ('email', 'username',  )
 
 # class ProfileSerializer(serializers.ModelSerializer):
 #     """

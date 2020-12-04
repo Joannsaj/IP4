@@ -12,24 +12,6 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
-class Profile(models.Model):
-    # user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='user')
-    profile_pic = CloudinaryField('image', null=True)
-    name = models.CharField(max_length=60)
-    bio = models.TextField(null=True)
-    neighborhood = models.ForeignKey("Neighbourhood", on_delete= models.CASCADE, related_name='neighbourhood' )
-    email_address = models.EmailField(max_length=60)
- 
-    # @receiver(post_save, sender=CustomUser)
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         Profile.objects.create(user=instance)
-
-    # @receiver(post_save, sender=CustomUser)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.profile.save()    
-
-
 class Neighbourhood(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=60)
@@ -53,6 +35,24 @@ class Neighbourhood(models.Model):
     @classmethod
     def find_neighborhood(cls, neighborhood_id):
         return cls.objects.filter(id=neighborhood_id)
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='user', null=True)
+    profile_pic = CloudinaryField('image', null=True)
+    name = models.CharField(max_length=60, null=True)
+    bio = models.TextField(null=True)
+    neighborhood = models.ForeignKey(Neighbourhood, on_delete= models.CASCADE, related_name='neighbourhood' )
+    email_address = models.EmailField(max_length=60)
+    location = models.CharField(max_length=60, null=True)
+    # @receiver(post_save, sender=User)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         Profile.objects.create(user=instance)
+
+    # @receiver(post_save, sender=User)
+    # def save_user_profile(sender, instance, **kwargs):
+    #     instance.profile.save()    
+
 
 # class Business(models.Model):
 #     name = models.CharField(max_length=120)

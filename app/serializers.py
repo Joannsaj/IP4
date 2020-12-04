@@ -33,7 +33,12 @@ class NeighbourhoodSerializer(serializers.ModelSerializer):
         model = models.Neighbourhood
         fields = ('id','name', 'location', 'admin', 'description', 'healthcenter_number', 'police_number' )     
         
-class ProfileSerializer(serializers.ModelSerializer):
+class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Profile
+        model = models.Business
         fields = ('__all__' )        
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Post
+        fields = ('__all__' )               
